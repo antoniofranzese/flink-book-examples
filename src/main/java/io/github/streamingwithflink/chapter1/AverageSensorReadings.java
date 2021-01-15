@@ -57,7 +57,7 @@ public class AverageSensorReadings {
             // organize stream by sensor
             .keyBy(r -> r.id)
             // group readings in 1 second windows
-            .timeWindow(Time.seconds(1))
+            .timeWindow(Time.seconds(3))
             // compute average temperature using a user-defined function
             .apply(new TemperatureAverager());
 

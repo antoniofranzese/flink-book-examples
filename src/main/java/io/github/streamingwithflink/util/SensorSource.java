@@ -33,6 +33,8 @@ public class SensorSource extends RichParallelSourceFunction<SensorReading> {
     // flag indicating whether source is still running
     private boolean running = true;
 
+	private final static int COUNT = 2;
+
     /** run() continuously emits SensorReadings by emitting them through the SourceContext. */
     @Override
     public void run(SourceContext<SensorReading> srcCtx) throws Exception {
@@ -43,9 +45,10 @@ public class SensorSource extends RichParallelSourceFunction<SensorReading> {
         int taskIdx = this.getRuntimeContext().getIndexOfThisSubtask();
 
         // initialize sensor ids and temperatures
-        String[] sensorIds = new String[10];
-        double[] curFTemp = new double[10];
-        for (int i = 0; i < 10; i++) {
+        //String[] sensorIds = new String[10];
+        String[] sensorIds = new String[COUNT];
+        double[] curFTemp = new double[COUNT];
+        for (int i = 0; i < COUNT; i++) {
             sensorIds[i] = "sensor_" + (taskIdx * 10 + i);
             curFTemp[i] = 65 + (rand.nextGaussian() * 20);
         }
@@ -56,7 +59,7 @@ public class SensorSource extends RichParallelSourceFunction<SensorReading> {
             long curTime = Calendar.getInstance().getTimeInMillis();
 
             // emit SensorReadings
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < COUNT; i++) {
                 // update current temperature
                 curFTemp[i] += rand.nextGaussian() * 0.5;
                 // emit reading
