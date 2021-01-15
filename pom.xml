@@ -36,6 +36,7 @@ under the License.
 		<scala.binary.version>2.12</scala.binary.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<example>chapter1.AverageSensorReadings</example>
 	</properties>
 
 	<dependencies>
@@ -103,6 +104,24 @@ under the License.
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>io.github.streamingwithflink.${example}</mainClass>
+					<addResourcesToClasspath>true</addResourcesToClasspath>
+					<classpathScope>test</classpathScope>
+				</configuration>
+			</plugin>
+
 			<!-- Java Compiler -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
